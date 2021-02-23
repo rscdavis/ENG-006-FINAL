@@ -1,3 +1,9 @@
+Dough = imread('dough.png');
+Sauce = imread('sauce.png');
+Cheese = imread('cheese.png');
+Pepperoni = imread('pepperoni.png');
+Mushroom = imread('mushroom.png');
+
 diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
 
 switch diceRoll %depending on the roll, topping is assigned a different string
