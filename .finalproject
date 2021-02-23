@@ -9,15 +9,15 @@ diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
 
 switch diceRoll %depending on the roll, topping is assigned a different string
     case 1
-       topping = disp(Dough)
+       topping = imshow(Dough)
     case 2
-        topping = disp(Sauce)
+        topping = imshow(Sauce)
     case 3
-        topping = disp(Cheese)
+        topping = imshow(Cheese)
     case 4
-        topping = disp(Pepperoni)
+        topping = imshow(Pepperoni)
     case 5
-        topping = disp(Mushroom)
+        topping = imshow(Mushroom)
     case 6
         topping = disp(Lose a Topping)
 end
