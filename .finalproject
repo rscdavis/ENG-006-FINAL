@@ -5,22 +5,33 @@ Cheese = imread('cheese.png');
 Pepperoni = imread('pepperoni.png');
 Mushroom = imread('mushroom.png');
 
-diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
-
-switch diceRoll %depending on the roll, topping is assigned a different string
+pizzaToppings = [] %creates empty array of toppings
+for i=1:6
+    diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
+switch diceRoll %depending on the roll, a different topping is assigned
     case 1
-       topping = imshow(Dough)
+       %topping = imshow(Dough)
+       pizzaToppings(i) = 1
     case 2
-        topping = imshow(Sauce)
+        %topping = imshow(Sauce)
+        pizzaToppings(i) = 2
     case 3
-        topping = imshow(Cheese)
+        %topping = imshow(Cheese)
+        pizzaToppings(i) = 3
     case 4
-        topping = imshow(Pepperoni)
+        %topping = imshow(Pepperoni)
+        pizzaToppings(i) = 4
     case 5
-        topping = imshow(Mushroom)
+        %topping = imshow(Mushroom)
+        pizzaToppings(i) = 5
     case 6
-        topping = disp(Lose a Topping)
+       
+        if length(pizzaToppings) >= 1
+        pizzaToppings(i-1) = []
+        else
+            disp("No Toppings")
+        end
 end
-
-disp(topping)
+end
+ pizzaToppings
 
