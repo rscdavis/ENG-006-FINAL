@@ -1,2 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
+
