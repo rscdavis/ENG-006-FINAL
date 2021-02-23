@@ -1,2 +1,19 @@
 diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
 
+switch diceRoll %depending on the roll, topping is assigned a different string
+    case 1
+       topping = "dough"
+    case 2
+        topping = "sauce"
+    case 3
+        topping = "cheese"
+    case 4
+        topping = "peppa roni"
+    case 5
+        topping = "mush room"
+    case 6
+        topping = "lose a topping"
+end
+
+disp(topping)
+
