@@ -1,3 +1,4 @@
+% set variables to images
 Dough = imread('dough.png');
 Sauce = imread('sauce.png');
 Cheese = imread('cheese.png');
