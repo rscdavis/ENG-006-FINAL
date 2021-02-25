@@ -43,21 +43,21 @@ end
     end
 
 % scoring
-    if length(pizzaToppings) == 5 
+    if length(pizzaToppings) == 5 & time <
         score = 50;
         fprintf(
-    if length(pizzaToppings) == 4
+    if length(pizzaToppings) == 4 & time < 
         score = 40;
          fprintf(
-    if length(pizzaToppings) == 3
+    if length(pizzaToppings) == 3 & time <
         score = 30;
          fprintf(
-    if length(pizzaToppings) == 2
+    if length(pizzaToppings) == 2 & time <
         score = 20;
          fprintf(
-    if length(pizzaToppings) == 1
+    if length(pizzaToppings) == 1 & time <
         score = 10;
          fprintf(
-    if length(pizzaToppings) == 0
+    if length(pizzaToppings) == 0 & time <
         score == 0;
          fprintf(
