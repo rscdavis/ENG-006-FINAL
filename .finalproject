@@ -44,20 +44,20 @@ end
 
 % scoring
     if length(pizzaToppings) == 5 
-        points = 50;
+        score = 50;
         fprintf(
     if length(pizzaToppings) == 4
-        points = 40;
+        score = 40;
          fprintf(
     if length(pizzaToppings) == 3
-        points = 30;
+        score = 30;
          fprintf(
     if length(pizzaToppings) == 2
-        points = 20;
+        score = 20;
          fprintf(
     if length(pizzaToppings) == 1
-        points = 10;
+        score = 10;
          fprintf(
     if length(pizzaToppings) == 0
-        points == 0;
+        score == 0;
          fprintf(
