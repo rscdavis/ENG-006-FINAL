@@ -35,3 +35,16 @@ end
 end
  pizzaToppings
 
+% scoring
+    if length(pizzaToppings) = 5
+        points = 50;
+    if length(pizzaToppings) = 4
+        points = 40;
+    if length(pizzaToppings) = 3
+        points = 30;
+    if length(pizzaToppings) = 2
+        points = 20;
+    if length(pizzaToppings) = 1
+        points = 10;
+    if length(pizzaToppings) = 0
+        points = 0;
