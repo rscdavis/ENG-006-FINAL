@@ -45,19 +45,19 @@ end
 % scoring
     if length(pizzaToppings) == 5 
         points = 50;
-        fprintf('\nChef 1 has a score of %i points\n', k, points)
+        fprintf(
     if length(pizzaToppings) == 4
         points = 40;
-         fprintf('\nChef 1 has a score of %i points\n', k, points)
+         fprintf(
     if length(pizzaToppings) == 3
         points = 30;
-         fprintf('\nChef 1 has a score of %i points\n', k, points)
+         fprintf(
     if length(pizzaToppings) == 2
         points = 20;
-         fprintf('\nChef 1 has a score of %i points\n', k, points)
+         fprintf(
     if length(pizzaToppings) == 1
         points = 10;
-         fprintf('\nChef 1 has a score of %i points\n', k, points)
+         fprintf(
     if length(pizzaToppings) == 0
         points == 0;
-         fprintf('\nChef 1 has a score of %i points\n', k, points)
+         fprintf(
