@@ -56,27 +56,27 @@ end
 
 % Player 1 scoring
     if app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'on'
-        app.ScoreEditField == 50;
+        app.ScoreEditField.Value == 50;
     elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 40;
+        app.ScoreEditField.Value == 40;
     elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off' 
-        app.ScoreEditField == 30;
+        app.ScoreEditField.Value == 30;
     elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 20;
+        app.ScoreEditField.Value == 20;
     elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'off' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 10;
+        app.ScoreEditField.Value == 10;
     else 
         app.ScoreEditField == 0;
  % Player 2 scoring
     if app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'on' & app.Mushroom_3.Visible = 'on'
-        app.ScoreEditField_2 == 50;
+        app.ScoreEditField_2.Value == 50;
     elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'on' & app.Mushroom_3.Visible = 'off'
-        app.ScoreEditField_2 == 40;
+        app.ScoreEditField_2.Value == 40;
     elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off' 
-        app.ScoreEditField_2 == 30;
+        app.ScoreEditField_2.Value == 30;
     elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'off' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off'
-        app.ScoreEditField_2 == 20;
+        app.ScoreEditField_2.Value == 20;
     elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'off' & app.Cheese_3.Visible = 'off' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off'
-        app.ScoreEditField_2 == 10;
+        app.ScoreEditField_2.Value == 10;
     else 
-        app.ScoreEditField_2 == 0;
+        app.ScoreEditField_2.Value == 0;
