@@ -55,15 +55,20 @@ end
              end
 
 % Player 1 scoring
-    if app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'on'
+   allToppings = app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'on'
+   pepperoniPizza = app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'off'
+   cheesePizza = app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
+   disgustingPizza = app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
+   justDough = app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'off' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
+   if allToppings 
         app.ScoreEditField.Value == 50;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'off'
+    elseif pepperoniPizza
         app.ScoreEditField.Value == 40;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off' 
+    elseif cheesePizza
         app.ScoreEditField.Value == 30;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
+    elseif disgustingPizza
         app.ScoreEditField.Value == 20;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'off' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
+    elseif justDough
         app.ScoreEditField.Value == 10;
     else 
         app.ScoreEditField == 0;
