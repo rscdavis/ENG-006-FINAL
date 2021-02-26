@@ -55,21 +55,16 @@ end
              end
 
 % scoring
-    if length(pizzaToppings) == 5 & time <
-        score = 50;
-        fprintf(
-    if length(pizzaToppings) == 4 & time < 
-        score = 40;
-         fprintf(
-    if length(pizzaToppings) == 3 & time <
-        score = 30;
-         fprintf(
-    if length(pizzaToppings) == 2 & time <
-        score = 20;
-         fprintf(
-    if length(pizzaToppings) == 1 & time <
-        score = 10;
-         fprintf(
-    if length(pizzaToppings) == 0 & time <
-        score == 0;
-         fprintf(
+    if length(pizzaToppings) == 5 
+        app.ScoreEditField = 50;
+    elseif length(pizzaToppings) == 4 
+        app.ScoreEditField = 40;
+    elseif length(pizzaToppings) == 3 
+        app.ScoreEditField = 30;
+    elseif length(pizzaToppings) == 2 
+        app.ScoreEditField = 20;
+    elseif length(pizzaToppings) == 1 
+        app.ScoreEditField = 10;
+    else length(pizzaToppings) == 0 
+        app.ScoreEditField == 0;
+    
