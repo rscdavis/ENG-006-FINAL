@@ -4,14 +4,19 @@ Sauce = imread('sauce.png');
 Cheese = imread('cheese.png');
 Pepperoni = imread('pepperoni.png');
 Mushroom = imread('mushroom.png');
-
 pizzaToppings = [] %creates empty array of toppings
 amtToppings = 0;
+
 for i=1:100 %iterates through dice rolls until there are 6 elements in the array
-   if length(pizzaToppings) == 6
+   
+   while(1) 
+       
+        if length(pizzaToppings) == 6 %for loop breaks if there are 6 toppings
        break
    end
-    diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
+   
+   diceRoll = randi([1,6],1,1) %generates a random number between 1 and 6
+   
 if diceRoll == 1 
     amtToppings = amtToppings + 1
     pizzaToppings(amtToppings) = 1
@@ -39,8 +44,15 @@ elseif diceRoll == 6
         pizzaToppings(amtToppings) = [] %deletes the most current topping
         amtToppings = amtToppings - 1
     end
+   
+end
+
+m=input('Do you want to continue, Y/N [Y]:','s') %asks for user input to continue 
+if m=='N'
+break
 end
     end
+             end
 
 % scoring
     if length(pizzaToppings) == 5 & time <
