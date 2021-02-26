@@ -55,16 +55,16 @@ end
              end
 
 % scoring
-    if length(pizzaToppings) == 5 
+    if app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'on'
         app.ScoreEditField = 50;
-    elseif length(pizzaToppings) == 4 
+    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'off'
         app.ScoreEditField = 40;
-    elseif length(pizzaToppings) == 3 
+    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off' 
         app.ScoreEditField = 30;
-    elseif length(pizzaToppings) == 2 
+    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
         app.ScoreEditField = 20;
-    elseif length(pizzaToppings) == 1 
+    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'off' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
         app.ScoreEditField = 10;
-    else length(pizzaToppings) == 0 
+    else 
         app.ScoreEditField == 0;
     
