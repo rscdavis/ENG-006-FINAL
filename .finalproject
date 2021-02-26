@@ -68,15 +68,15 @@ end
     else 
         app.ScoreEditField == 0;
  % Player 2 scoring
-    if app.Dough_3.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'on'
-        app.ScoreEditField == 50;
-    elseif app.Dough_3.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'on' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 40;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'on' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off' 
-        app.ScoreEditField == 30;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'on' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 20;
-    elseif app.Dough_2.Visible = 'on' & app.Sauce_2.Visible = 'off' & app.Cheese_2.Visible = 'off' & app.Pepperoni_2.Visible = 'off' & app.Mushroom_2.Visible = 'off'
-        app.ScoreEditField == 10;
+    if app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'on' & app.Mushroom_3.Visible = 'on'
+        app.ScoreEditField_2 == 50;
+    elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'on' & app.Mushroom_3.Visible = 'off'
+        app.ScoreEditField_2 == 40;
+    elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'on' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off' 
+        app.ScoreEditField_2 == 30;
+    elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'on' & app.Cheese_3.Visible = 'off' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off'
+        app.ScoreEditField_2 == 20;
+    elseif app.Dough_3.Visible = 'on' & app.Sauce_3.Visible = 'off' & app.Cheese_3.Visible = 'off' & app.Pepperoni_3.Visible = 'off' & app.Mushroom_3.Visible = 'off'
+        app.ScoreEditField_2 == 10;
     else 
-        app.ScoreEditField == 0;
+        app.ScoreEditField_2 == 0;
