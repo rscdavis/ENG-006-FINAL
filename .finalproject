@@ -71,15 +71,15 @@ end
                 badLuckRoll = randi([1,5],1,1)
                     switch badLuckRoll
                         case 1
-                            app.Dough.Visible = 'off';
+                            app.Dough_2.Visible = 'off';
                         case 2
-                            app.Sauce.Visible = 'off';
+                            app.Sauce_2.Visible = 'off';
                         case 3
-                            app.Cheese.Visible = 'off';
+                            app.Cheese_2.Visible = 'off';
                         case 4 
-                            app.Pepperoni.Visible = 'off';
+                            app.Pepperoni_2.Visible = 'off';
                         case 5
-                            app.Mushroom.Visible = 'off';
+                            app.Mushroom_2.Visible = 'off';
                     end
                     
             end 
