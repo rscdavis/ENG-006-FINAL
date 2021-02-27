@@ -106,23 +106,23 @@ diceRoll = app.diceRoll;
 if diceRoll == 1 
     amtToppings = amtToppings + 1
     pizzaToppings(amtToppings) = 1
-    app.ScoreEditField.Value == 10
+    app.ScoreEditField.Value = app.ScoreEditField.Value + 10;
 elseif diceRoll == 2
     amtToppings = amtToppings + 1
     pizzaToppings(amtToppings) = 2
-    app.ScoreEditField.Value == 10
+    app.ScoreEditField.Value = app.ScoreEditField.Value + 10;
 elseif diceRoll == 3
     amtToppings = amtToppings + 1
     pizzaToppings(amtToppings) = 3
-    app.ScoreEditField.Value == 10;
+    app.ScoreEditField.Value = app.ScoreEditField.Value + 10;
 elseif diceRoll == 4
     amtToppings = amtToppings + 1
     pizzaToppings(amtToppings) = 4
-    app.ScoreEditField.Value == 10;
+    app.ScoreEditField.Value = app.ScoreEditField.Value + 10;
 elseif diceRoll == 5
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
-    app.ScoreEditField.Value == 10;
+    app.ScoreEditField.Value = app.ScoreEditField.Value + 10;
 elseif diceRoll == 6
     if amtToppings == 0
         disp("No Toppings")
