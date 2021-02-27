@@ -40,6 +40,8 @@ classdef app1 < matlab.apps.AppBase
         AddToppingButton_2  matlab.ui.control.Button
         RollDiceButton_2    matlab.ui.control.Button
         ClearPizzaButton_2  matlab.ui.control.Button
+        Image4              matlab.ui.control.Image
+        Image5              matlab.ui.control.Image
     end
 
 properties
@@ -52,7 +54,7 @@ end
 
         % Button pushed function: RollDiceButton
         function RollDiceButtonPushed(app, event)
-            app.diceRoll = randi([1,6],1,1);
+            app.diceRoll = randi([1,8],1,1);
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -87,7 +89,11 @@ end
                         %    app.Pepperoni_2.Visible = 'off';
                         %case 5
                         %    app.Mushroom_2.Visible = 'off';
-                    %end
+                        %end
+                case 7 
+                    app.Peppers.Visible = 'on';
+                case 8 
+                    app.Olive.Visible = 'on';
             end 
         end
 
@@ -115,11 +121,13 @@ end
             app.Mushroom_3.Visible = 'off';
             app.Cheese_3.Visible = 'off';
             app.Sauce_3.Visible = 'off'; 
+            app.ScoreEditField.Value = 0;
+            app.ScoreEditField.Value = 0;
         end
 
         % Button pushed function: AddToppingButton
         function AddToppingButtonPushed(app, event)
-pizzaToppings = zeros([1,6]); %creates empty array of toppings
+pizzaToppings = zeros([1,8]); %creates empty array of toppings
 amtToppings = 0;
 if app.diceRoll == 1 
     app.Dough_2.Visible = 'on';
@@ -146,9 +154,19 @@ elseif app.diceRoll == 5
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
     app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
+elseif app.diceRoll == 7
+    app.Peppers_2.Visible = 'on';
+    amtToppings = amtToppings + 1;
+    pizzaToppings(amtToppings) = 5;
+    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
+elseif app.diceRoll == 8
+    app.Olive_2.Visible = 'on';
+    amtToppings = amtToppings + 1;
+    pizzaToppings(amtToppings) = 5;
+    app.ScoreEditField.Value = 10+app.ScoreEditField.Value; 
 elseif app.diceRoll == 6
     if amtToppings == 0
-        disp("No Toppings");
+        app.ScoreEditField.Value = app.ScoreEditField.Value;
     else
         pizzaToppings(amtToppings) = []; %deletes the most current topping
         amtToppings = amtToppings - 1;
@@ -182,7 +200,7 @@ end
 
         % Button pushed function: RollDiceButton_2
         function RollDiceButton_2Pushed(app, event)
-            app.diceRoll_2 = randi([1,6],1,1);
+            app.diceRoll_2 = randi([1,8],1,1);
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -217,7 +235,11 @@ end
                         %    app.Pepperoni_2.Visible = 'off';
                         %case 5
                         %    app.Mushroom_2.Visible = 'off';
-                    %end
+                        %end
+                case 7 
+                    app.Peppers.Visible = 'on';
+                case 8 
+                    app.Olive.Visible = 'on';
             end 
         end
 
@@ -262,9 +284,19 @@ elseif app.diceRoll_2 == 5
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
     app.ScoreEditField_2.Value = 10+app.ScoreEditField_2.Value;
+elseif app.diceRoll_2 == 7
+    app.Peppers_3.Visible = 'on';
+    amtToppings = amtToppings + 1;
+    pizzaToppings(amtToppings) = 5;
+    app.ScoreEditField_2.Value = 10+app.ScoreEditField_2.Value;
+elseif app.diceRoll_2 == 8
+    app.Olive_3.Visible = 'on';
+    amtToppings = amtToppings + 1;
+    pizzaToppings(amtToppings) = 5;
+    app.ScoreEditField_2.Value = 10+app.ScoreEditField_2.Value; 
 elseif app.diceRoll_2 == 6
     if amtToppings == 0
-        disp("No Toppings");
+        app.ScoreEditField_2.Value = app.ScoreEditField_2.Value;
     else
         pizzaToppings(amtToppings) = []; %deletes the most current topping
         amtToppings = amtToppings - 1;
@@ -528,6 +560,16 @@ end
             app.ClearPizzaButton_2.FontSize = 13;
             app.ClearPizzaButton_2.Position = [362 446 101 26];
             app.ClearPizzaButton_2.Text = 'Clear Pizza';
+
+            % Create Image4
+            app.Image4 = uiimage(app.UIFigure);
+            app.Image4.Position = [-7 283 128 157];
+            app.Image4.ImageSource = '9-97401_loading-screen-pizza-club-penguin-pizza-guy.png';
+
+            % Create Image5
+            app.Image5 = uiimage(app.UIFigure);
+            app.Image5.Position = [-7 29 146 214];
+            app.Image5.ImageSource = '99-998190_image-mopping-club-penguin-pizza-guy-club-penguin.png';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
