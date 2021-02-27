@@ -68,7 +68,20 @@ end
                 case 5
                     app.Mushroom.Visible = 'on';
                 case 6
-                    app.Image.Visible = 'on';
+                badLuckRoll = randi([1,5],1,1)
+                    switch badLuckRoll
+                        case 1
+                            app.Dough.Visible = 'off';
+                        case 2
+                            app.Sauce.Visible = 'off';
+                        case 3
+                            app.Cheese.Visible = 'off';
+                        case 4 
+                            app.Pepperoni.Visible = 'off';
+                        case 5
+                            app.Mushroom.Visible = 'off';
+                    end
+                    
             end 
         end
 
