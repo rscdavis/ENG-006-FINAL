@@ -601,3 +601,8 @@ end
         end
     end
 end
+
+CODE FOR AUDIO:
+[y,Fs] = audioread("30. Pizzatron 3000.mp3");
+            sound = audioplayer(y,Fs);
+            play(sound);
