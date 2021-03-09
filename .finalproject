@@ -47,6 +47,12 @@ properties
     diceRoll_2 = 0;
 end 
 
+properties (Access = public)
+    channelID = 1322648
+    writeAPI = 2G22V6OG6PFINWRA
+    readAPI = L40IA0P1S3Q4G3AC
+end
+
     % Callbacks that handle component events
     methods (Access = private)
 
