@@ -85,7 +85,7 @@ end
                     app.UITable.Data(5, 1) = 1 + app.UITable.Data(5, 1);
                 case 6
                     app.Image.Visible = 'on';
-                    app.ScoreEditField.Value = app.ScoreEditField.Value-10;
+                    app.UITable.Data(6, 1) = 1 + app.UITable.Data(6, 1);
                     %badLuckRoll = randi([1,5],1,1);
                     %switch badLuckRoll
                        % case 1
@@ -215,7 +215,7 @@ end
                     app.UITable.Data(5, 2) = 1 + app.UITable.Data(5, 2);
                 case 6
                     app.Image.Visible = 'on';
-                    app.ScoreEditField.Value = app.ScoreEditField.Value-10;
+                    app.UITable.Data(6, 2) = 1 + app.UITable.Data(6, 2);
                     %badLuckRoll = randi([1,5],1,1);
                     %switch badLuckRoll
                        % case 1
