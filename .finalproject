@@ -134,12 +134,28 @@ end
             app.Sauce_3.Visible = 'off'; 
             app.ScoreEditField.Value = 0;
             app.ScoreEditField.Value = 0;
+           
+            set(app.ClearPizzaButton_2,'Enable','off');
+            set(app.AddToppingButton_2,'Enable','off');
+            set(app.RollDiceButton_2,'Enable','off');
+            
+            %CODE FOR AUDIO:
+            [y,Fs] = audioread('30. Pizzatron 3000.mp3');
+            sound(y,Fs, 16);
         end
 
         % Button pushed function: AddToppingButton
         function AddToppingButtonPushed(app, event)
 pizzaToppings = zeros([1,8]); %creates empty array of toppings
 amtToppings = 0;
+
+    set(app.AddToppingButton,'Enable','off');
+    set(app.AddToppingButton_2,'Enable','on');
+    set(app.RollDiceButton_2,'Enable','on');
+    set(app.RollDiceButton,'Enable','off');
+     set(app.ClearPizzaButton_2,'Enable','on');
+    set(app.ClearPizzaButton,'Enable','off');
+     
 if app.diceRoll == 1 
     app.Dough_2.Visible = 'on';
     amtToppings = amtToppings + 1;
@@ -254,6 +270,14 @@ end
         function AddToppingButton_2Pushed(app, event)
 pizzaToppings = zeros([1,6]); %creates empty array of toppings
 amtToppings = 0;
+
+set(app.AddToppingButton,'Enable','on');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','on');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','on');
+    
 if app.diceRoll_2 == 1 
     app.Dough_3.Visible = 'on';
     amtToppings = amtToppings + 1;
@@ -584,6 +608,4 @@ end
     end
 end
 
-CODE FOR AUDIO:
-[y,Fs] = audioread('30. Pizzatron 3000.mp3');
-            sound(y,Fs, 16);
+
