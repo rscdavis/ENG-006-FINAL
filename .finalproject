@@ -35,8 +35,6 @@ classdef app1 < matlab.apps.AppBase
         Chef1Label          matlab.ui.control.Label
         ClearPizzaButton    matlab.ui.control.Button
         Chef1ScoreLabel     matlab.ui.control.Label
-        ScoreEditField      matlab.ui.control.NumericEditField
-        ScoreEditField_2    matlab.ui.control.NumericEditField
         AddToppingButton_2  matlab.ui.control.Button
         RollDiceButton_2    matlab.ui.control.Button
         ClearPizzaButton_2  matlab.ui.control.Button
@@ -66,14 +64,19 @@ end
             switch app.diceRoll %depending on the roll, topping is assigned a different string
                 case 1
                     app.Dough.Visible = 'on';
+                    app.UITable.Data(1, 1) = 1 + app.UITable.Data(1, 1);
                 case 2
                     app.Sauce.Visible = 'on';
+                    app.UITable.Data(2, 1) = 1 + app.UITable.Data(2, 1);
                 case 3
                     app.Cheese.Visible = 'on';
+                    app.UITable.Data(3, 1) = 1 + app.UITable.Data(3, 1);
                 case 4
                     app.Pepperoni.Visible = 'on';
+                    app.UITable.Data(4, 1) = 1 + app.UITable.Data(4, 1);
                 case 5
                     app.Mushroom.Visible = 'on';
+                    app.UITable.Data(5, 1) = 1 + app.UITable.Data(5, 1);
                 case 6
                     app.Image.Visible = 'on';
                     app.ScoreEditField.Value = app.ScoreEditField.Value-10;
@@ -92,8 +95,10 @@ end
                         %end
                 case 7 
                     app.Peppers.Visible = 'on';
+                     app.UITable.Data(7, 1) = 1 + app.UITable.Data(7, 1);
                 case 8 
                     app.Olive.Visible = 'on';
+                    app.UITable.Data(8, 1) = 1 + app.UITable.Data(8, 1);
             end 
         end
 
@@ -133,44 +138,36 @@ if app.diceRoll == 1
     app.Dough_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 1;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 2
     app.Sauce_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 2;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 3
     app.Cheese_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 3;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 4
     app.Pepperoni_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 4;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 5
     app.Mushroom_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 7
     app.Peppers_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value;
 elseif app.diceRoll == 8
     app.Olive_2.Visible = 'on';
     amtToppings = amtToppings + 1;
     pizzaToppings(amtToppings) = 5;
-    app.ScoreEditField.Value = 10+app.ScoreEditField.Value; 
 elseif app.diceRoll == 6
     if amtToppings == 0
         app.ScoreEditField.Value = app.ScoreEditField.Value;
     else
         pizzaToppings(amtToppings) = []; %deletes the most current topping
         amtToppings = amtToppings - 1;
-        app.ScoreEditField.Value = app.ScoreEditField.Value - 10;
     end
    
 end
@@ -188,16 +185,6 @@ end
             app.ScoreEditField.Value = 0;
         end
 
-        % Value changed function: ScoreEditField
-        function ScoreEditFieldValueChanged(app, event)
-   
-        end
-
-        % Value changed function: ScoreEditField_2
-        function ScoreEditField_2ValueChanged(app, event)
-      
-        end
-
         % Button pushed function: RollDiceButton_2
         function RollDiceButton_2Pushed(app, event)
             app.diceRoll_2 = randi([1,8],1,1);
@@ -212,14 +199,19 @@ end
             switch app.diceRoll_2 %depending on the roll, topping is assigned a different string
                 case 1
                     app.Dough.Visible = 'on';
+                    app.UITable.Data(1, 2) = 1 + app.UITable.Data(1, 2);
                 case 2
                     app.Sauce.Visible = 'on';
+                    app.UITable.Data(2, 2) = 1 + app.UITable.Data(2, 2);
                 case 3
                     app.Cheese.Visible = 'on';
+                    app.UITable.Data(3, 2) = 1 + app.UITable.Data(3, 2);
                 case 4
                     app.Pepperoni.Visible = 'on';
+                    app.UITable.Data(4, 2) = 1 + app.UITable.Data(4, 2);
                 case 5
                     app.Mushroom.Visible = 'on';
+                    app.UITable.Data(5, 2) = 1 + app.UITable.Data(5, 2);
                 case 6
                     app.Image.Visible = 'on';
                     app.ScoreEditField.Value = app.ScoreEditField.Value-10;
@@ -238,8 +230,10 @@ end
                         %end
                 case 7 
                     app.Peppers.Visible = 'on';
+                    app.UITable.Data(7, 2) = 1 + app.UITable.Data(7, 2);
                 case 8 
                     app.Olive.Visible = 'on';
+                    app.UITable.Data(8, 2) = 1 + app.UITable.Data(8, 2);
             end 
         end
 
