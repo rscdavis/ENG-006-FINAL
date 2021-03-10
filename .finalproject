@@ -59,6 +59,9 @@ end
         % Button pushed function: RollDiceButton
         function RollDiceButtonPushed(app, event)
             app.diceRoll = randi([1,8],1,1);
+            
+            set(app.RollDiceButton,'Enable', 'off');
+            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -206,6 +209,9 @@ end
         % Button pushed function: RollDiceButton_2
         function RollDiceButton_2Pushed(app, event)
             app.diceRoll_2 = randi([1,8],1,1);
+            
+            set(app.RollDiceButton_2,'Enable', 'off');
+            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
