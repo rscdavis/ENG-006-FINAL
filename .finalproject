@@ -3,9 +3,16 @@ classdef app1 < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         UIFigure            matlab.ui.Figure
-        Image               matlab.ui.control.Image
         Image2              matlab.ui.control.Image
+        MuteMusicButton     matlab.ui.control.Button
+        Image8              matlab.ui.control.Image
         Image2_2            matlab.ui.control.Image
+        Chef2ScoreButton    matlab.ui.control.Button
+        Chef1ScoreButton_2  matlab.ui.control.Button
+        Chef1ScoreButton    matlab.ui.control.Button
+        Chef2ScoreButton_2  matlab.ui.control.Button
+        SkipTurnButton      matlab.ui.control.Button
+        SkipTurnButton_2    matlab.ui.control.Button
         AddToppingButton    matlab.ui.control.Button
         RollDiceButton      matlab.ui.control.Button
         Dough               matlab.ui.control.Image
@@ -15,8 +22,6 @@ classdef app1 < matlab.apps.AppBase
         Mushroom            matlab.ui.control.Image
         Pepperoni           matlab.ui.control.Image
         Olive               matlab.ui.control.Image
-        Chef2ScoresLabel    matlab.ui.control.Label
-        StartButton         matlab.ui.control.Button
         Dough_2             matlab.ui.control.Image
         Sauce_2             matlab.ui.control.Image
         Cheese_2            matlab.ui.control.Image
@@ -34,18 +39,24 @@ classdef app1 < matlab.apps.AppBase
         Chef2Label          matlab.ui.control.Label
         Chef1Label          matlab.ui.control.Label
         ClearPizzaButton    matlab.ui.control.Button
-        Chef1ScoreLabel     matlab.ui.control.Label
         AddToppingButton_2  matlab.ui.control.Button
         RollDiceButton_2    matlab.ui.control.Button
         ClearPizzaButton_2  matlab.ui.control.Button
         Image4              matlab.ui.control.Image
-        Image5              matlab.ui.control.Image
+        UITable             matlab.ui.control.Table
+        Chef2Wins           matlab.ui.control.Image
+        Image               matlab.ui.control.Image
+        Chef1Wins           matlab.ui.control.Image
+        Image7              matlab.ui.control.Image
+        StartButton         matlab.ui.control.Button
+        TextArea            matlab.ui.control.TextArea
+        Image6              matlab.ui.control.Image
     end
 
 properties
     diceRoll = 0;
     diceRoll_2 = 0;
-end 
+end
 
 properties (Access = public)
     channelID = 1322648;
@@ -56,12 +67,15 @@ end
     % Callbacks that handle component events
     methods (Access = private)
 
+        % Code that executes after component creation
+        function startupFcn(app)
+            startData = [0, 0, 50; 0, 0, 40; 0, 0, 30; 0, 0, 10; 0, 0, 10; 0, 0, -15; 0, 0, 10; 0, 0, 10; 0, 0, 0];
+            app.UITable.Data = [app.UITable.Data; startData];
+        end
+
         % Button pushed function: RollDiceButton
         function RollDiceButtonPushed(app, event)
             app.diceRoll = randi([1,8],1,1);
-            
-            set(app.RollDiceButton,'Enable', 'off');
-            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -70,45 +84,68 @@ end
             app.Cheese.Visible = 'off';
             app.Sauce.Visible = 'off';
             app.Image.Visible = 'off';
+            set(app.RollDiceButton,'Enable', 'off');
             switch app.diceRoll %depending on the roll, topping is assigned a different string
                 case 1
                     app.Dough.Visible = 'on';
                     app.UITable.Data(1, 1) = 1 + app.UITable.Data(1, 1);
+                    if app.UITable.Data(1,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 2
                     app.Sauce.Visible = 'on';
                     app.UITable.Data(2, 1) = 1 + app.UITable.Data(2, 1);
+                    if app.UITable.Data(2,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 3
                     app.Cheese.Visible = 'on';
                     app.UITable.Data(3, 1) = 1 + app.UITable.Data(3, 1);
+                    if app.UITable.Data(3,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 4
                     app.Pepperoni.Visible = 'on';
                     app.UITable.Data(4, 1) = 1 + app.UITable.Data(4, 1);
+                    if app.UITable.Data(4,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 5
                     app.Mushroom.Visible = 'on';
                     app.UITable.Data(5, 1) = 1 + app.UITable.Data(5, 1);
+                    if app.UITable.Data(5,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 6
                     app.Image.Visible = 'on';
                     app.UITable.Data(6, 1) = 1 + app.UITable.Data(6, 1);
-                    %badLuckRoll = randi([1,5],1,1);
-                    %switch badLuckRoll
-                       % case 1
-                         %   app.Dough_2.Visible = 'off';
-                        %case 2
-                        %    app.Sauce_2.Visible = 'off';
-                        %case 3
-                        %    app.Cheese_2.Visible = 'off';
-                        %case 4 
-                        %    app.Pepperoni_2.Visible = 'off';
-                        %case 5
-                        %    app.Mushroom_2.Visible = 'off';
-                        %end
+                    set(app.Chef2ScoreButton, 'Enable', 'on');
+                    set(app.Chef1ScoreButton_2, 'Enable', 'on');
+                    set(app.AddToppingButton,'Enable', 'off');
+                    set(app.SkipTurnButton, 'Enable', 'off');
+                    set(app.ClearPizzaButton, 'Enable', 'off');
                 case 7 
                     app.Peppers.Visible = 'on';
                      app.UITable.Data(7, 1) = 1 + app.UITable.Data(7, 1);
+                     if app.UITable.Data(7,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
                 case 8 
                     app.Olive.Visible = 'on';
                     app.UITable.Data(8, 1) = 1 + app.UITable.Data(8, 1);
+                    if app.UITable.Data(8,1) > 1
+                        set(app.AddToppingButton, 'Enable', 'off');
+                        set(app.ClearPizzaButton, 'Enable', 'off');
+                    end
             end 
+            [y,Fs] = audioread('RATTLE1.wav');
+            sound(y,Fs, 16);
         end
 
         % Button pushed function: StartButton
@@ -135,62 +172,66 @@ end
             app.Mushroom_3.Visible = 'off';
             app.Cheese_3.Visible = 'off';
             app.Sauce_3.Visible = 'off'; 
-            app.ScoreEditField.Value = 0;
-            app.ScoreEditField.Value = 0;
-           
+            app.Image6.Visible = 'off';
+            app.Image7.Visible = 'off';
+            app.TextArea.Visible = 'off';
+            app.Chef1Wins.Visible = 'off';
+            app.Chef2Wins.Visible = 'off';
+            [y,Fs] = audioread("30. Pizzatron 3000.mp3");
+            x=y/3;
+            sound(x,Fs,16);
+            app.StartButton.Visible = 'off';
             set(app.ClearPizzaButton_2,'Enable','off');
             set(app.AddToppingButton_2,'Enable','off');
             set(app.RollDiceButton_2,'Enable','off');
-            
-            %CODE FOR AUDIO:
-            [y,Fs] = audioread('30. Pizzatron 3000.mp3');
-            x=y/3;
-            sound(x,Fs, 16);
+            set(app.Chef1ScoreButton, 'Enable', 'off');
+            set(app.Chef1ScoreButton_2, 'Enable', 'off');
+            set(app.Chef2ScoreButton, 'Enable', 'off');
+            set(app.Chef2ScoreButton_2, 'Enable', 'off');
+            set(app.SkipTurnButton_2, 'Enable', 'off');
         end
 
         % Button pushed function: AddToppingButton
         function AddToppingButtonPushed(app, event)
-pizzaToppings = zeros([1,8]); %creates empty array of toppings
-amtToppings = 0;
-
     set(app.AddToppingButton,'Enable','off');
     set(app.AddToppingButton_2,'Enable','on');
     set(app.RollDiceButton_2,'Enable','on');
     set(app.RollDiceButton,'Enable','off');
-     set(app.ClearPizzaButton_2,'Enable','on');
+    set(app.ClearPizzaButton_2,'Enable','on');
     set(app.ClearPizzaButton,'Enable','off');
-     
+    set(app.SkipTurnButton, 'Enable', 'off');
+    set(app.SkipTurnButton_2, 'Enable', 'on');
 if app.diceRoll == 1 
     app.Dough_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9,1) + 50;
 elseif app.diceRoll == 2
     app.Sauce_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 40;
 elseif app.diceRoll == 3
     app.Cheese_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 30;
 elseif app.diceRoll == 4
     app.Pepperoni_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 10;
 elseif app.diceRoll == 5
     app.Mushroom_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 10;
 elseif app.diceRoll == 7
     app.Peppers_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 10;
 elseif app.diceRoll == 8
     app.Olive_2.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 1) = app.UITable.Data(9, 1) + 10;
 elseif app.diceRoll == 6
-    app.UITable.Data(9, 1) = app.UITable.Data(9, 1) - 15;
-   
+    app.UITable.Data(9, 1) = app.UITable.Data(9, 1) - 15;  
+end
+
+if app.UITable.Data(1,1)>=1 & app.UITable.Data(2,1)>= 1 & app.UITable.Data(3,1)>=1 &... 
+   app.UITable.Data(4,1)>=1 & app.UITable.Data(5,1)>= 1 & app.UITable.Data(7,1)>=1 & ... 
+   app.UITable.Data(8,1)>=1  | app.UITable.Data(9,2) == 160
+         app.Chef1Wins.Visible = 'on';
+         [y,Fs] = audioread('Winner.mp3');
+         sound(y,Fs, 16);
 end
         end
 
@@ -203,15 +244,12 @@ end
             app.Mushroom_2.Visible = 'off';
             app.Cheese_2.Visible = 'off';
             app.Sauce_2.Visible = 'off'; 
-            app.ScoreEditField.Value = 0;
+            app.UITable.Data(:, 1) = 0;
         end
 
         % Button pushed function: RollDiceButton_2
         function RollDiceButton_2Pushed(app, event)
             app.diceRoll_2 = randi([1,8],1,1);
-            
-            set(app.RollDiceButton_2,'Enable', 'off');
-            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -220,45 +258,68 @@ end
             app.Cheese.Visible = 'off';
             app.Sauce.Visible = 'off';
             app.Image.Visible = 'off';
+            set(app.RollDiceButton_2,'Enable', 'off');
             switch app.diceRoll_2 %depending on the roll, topping is assigned a different string
                 case 1
                     app.Dough.Visible = 'on';
                     app.UITable.Data(1, 2) = 1 + app.UITable.Data(1, 2);
+                    if app.UITable.Data(1,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 2
                     app.Sauce.Visible = 'on';
                     app.UITable.Data(2, 2) = 1 + app.UITable.Data(2, 2);
+                    if app.UITable.Data(2,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 3
                     app.Cheese.Visible = 'on';
                     app.UITable.Data(3, 2) = 1 + app.UITable.Data(3, 2);
+                    if app.UITable.Data(3,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 4
                     app.Pepperoni.Visible = 'on';
                     app.UITable.Data(4, 2) = 1 + app.UITable.Data(4, 2);
+                    if app.UITable.Data(4,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 5
                     app.Mushroom.Visible = 'on';
                     app.UITable.Data(5, 2) = 1 + app.UITable.Data(5, 2);
+                    if app.UITable.Data(5,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 6
                     app.Image.Visible = 'on';
                     app.UITable.Data(6, 2) = 1 + app.UITable.Data(6, 2);
-                    %badLuckRoll = randi([1,5],1,1);
-                    %switch badLuckRoll
-                       % case 1
-                         %   app.Dough_2.Visible = 'off';
-                        %case 2
-                        %    app.Sauce_2.Visible = 'off';
-                        %case 3
-                        %    app.Cheese_2.Visible = 'off';
-                        %case 4 
-                        %    app.Pepperoni_2.Visible = 'off';
-                        %case 5
-                        %    app.Mushroom_2.Visible = 'off';
-                        %end
+                    set(app.Chef1ScoreButton, 'Enable', 'on');
+                    set(app.Chef2ScoreButton_2, 'Enable', 'on');
+                    set(app.AddToppingButton_2,'Enable', 'off');
+                    set(app.SkipTurnButton_2, 'Enable', 'off');
+                    set(app.ClearPizzaButton_2, 'Enable', 'off');
                 case 7 
                     app.Peppers.Visible = 'on';
                     app.UITable.Data(7, 2) = 1 + app.UITable.Data(7, 2);
+                    if app.UITable.Data(7,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
                 case 8 
                     app.Olive.Visible = 'on';
                     app.UITable.Data(8, 2) = 1 + app.UITable.Data(8, 2);
+                    if app.UITable.Data(8,2) > 1
+                        set(app.AddToppingButton_2, 'Enable', 'off');
+                        set(app.ClearPizzaButton_2, 'Enable', 'off');
+                    end
             end 
+            [y,Fs] = audioread('RATTLE1.wav');
+            sound(y,Fs, 16);
         end
 
         % Button pushed function: ClearPizzaButton_2
@@ -270,53 +331,146 @@ end
             app.Mushroom_3.Visible = 'off';
             app.Cheese_3.Visible = 'off';
             app.Sauce_3.Visible = 'off'; 
-            app.ScoreEditField_2.Value = 0;
+            app.UITable.Data(:, 2) = 0;
         end
 
         % Button pushed function: AddToppingButton_2
         function AddToppingButton_2Pushed(app, event)
-pizzaToppings = zeros([1,6]); %creates empty array of toppings
-amtToppings = 0;
-
-set(app.AddToppingButton,'Enable','on');
+    set(app.AddToppingButton,'Enable','on');
     set(app.AddToppingButton_2,'Enable','off');
     set(app.RollDiceButton_2,'Enable','off');
     set(app.RollDiceButton,'Enable','on');
     set(app.ClearPizzaButton_2,'Enable','off');
     set(app.ClearPizzaButton,'Enable','on');
-    
+    set(app.SkipTurnButton, 'Enable', 'on');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
 if app.diceRoll_2 == 1 
     app.Dough_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 50;
 elseif app.diceRoll_2 == 2
     app.Sauce_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 40;
 elseif app.diceRoll_2 == 3
     app.Cheese_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 30;
 elseif app.diceRoll_2 == 4
     app.Pepperoni_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 10;
 elseif app.diceRoll_2 == 5
     app.Mushroom_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 10;
 elseif app.diceRoll_2 == 7
     app.Peppers_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 10;
 elseif app.diceRoll_2 == 8
     app.Olive_3.Visible = 'on';
-    amtToppings = amtToppings + 1;
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 10;
-elseif app.diceRoll_2 == 6
-    app.UITable.Data(9, 2) = app.UITable.Data(9, 2) - 15;
-   
 end
+
+if app.UITable.Data(1,2)>=1 & app.UITable.Data(2,2)>= 1 & app.UITable.Data(3,2)>=1 &... 
+   app.UITable.Data(4,2)>=1 & app.UITable.Data(5,2)>= 1 & app.UITable.Data(7,2)>=1 & ... 
+   app.UITable.Data(8,2)>=1  | app.UITable.Data(9,2) == 160
+         app.Chef2Wins.Visible = 'on';
+         [y,Fs] = audioread('Winner.mp3');
+         sound(y,Fs, 16);
+end
+        end
+
+        % Button pushed function: SkipTurnButton
+        function SkipTurnButtonPushed(app, event)
+            set(app.AddToppingButton,'Enable','off');
+            set(app.AddToppingButton_2,'Enable','on');
+            set(app.RollDiceButton_2,'Enable','on');
+            set(app.RollDiceButton,'Enable','off');
+            set(app.ClearPizzaButton_2,'Enable','on');
+            set(app.ClearPizzaButton,'Enable','off');
+            set(app.SkipTurnButton, 'Enable', 'off');
+            set(app.SkipTurnButton_2, 'Enable', 'on');
+        end
+
+        % Button pushed function: SkipTurnButton_2
+        function SkipTurnButton_2Pushed(app, event)
+            set(app.AddToppingButton,'Enable','on');
+            set(app.AddToppingButton_2,'Enable','off');
+            set(app.RollDiceButton_2,'Enable','off');
+            set(app.RollDiceButton,'Enable','on');
+            set(app.ClearPizzaButton_2,'Enable','off');
+            set(app.ClearPizzaButton,'Enable','on');
+            set(app.SkipTurnButton, 'Enable', 'on');
+            set(app.SkipTurnButton_2, 'Enable', 'off');
+        end
+
+        % Button pushed function: MuteMusicButton
+        function MuteMusicButtonPushed(app, event)
+            clear sound;
+        end
+
+        % Button pushed function: Chef1ScoreButton_2
+        function Chef1ScoreButton_2Pushed(app, event)
+            app.UITable.Data(9,1) = app.UITable.Data(9,1) - 15;
+            set(app.AddToppingButton,'Enable','off');
+            set(app.AddToppingButton_2,'Enable','on');
+            set(app.RollDiceButton_2,'Enable','on');
+            set(app.RollDiceButton,'Enable','off');
+            set(app.ClearPizzaButton_2,'Enable','on');
+            set(app.ClearPizzaButton,'Enable','off');
+            set(app.SkipTurnButton, 'Enable', 'off');
+            set(app.SkipTurnButton_2, 'Enable', 'on');
+            set(app.Chef1ScoreButton, 'Enable', 'off');
+            set(app.Chef1ScoreButton_2, 'Enable', 'off');
+            set(app.Chef2ScoreButton, 'Enable', 'off');
+            set(app.Chef2ScoreButton_2, 'Enable', 'off');
+        end
+
+        % Button pushed function: Chef2ScoreButton
+        function Chef2ScoreButtonPushed(app, event)
+            app.UITable.Data(9,2) = app.UITable.Data(9,2) + 10;
+            set(app.AddToppingButton,'Enable','off');
+            set(app.AddToppingButton_2,'Enable','on');
+            set(app.RollDiceButton_2,'Enable','on');
+            set(app.RollDiceButton,'Enable','off');
+            set(app.ClearPizzaButton_2,'Enable','on');
+            set(app.ClearPizzaButton,'Enable','off');
+            set(app.SkipTurnButton, 'Enable', 'off');
+            set(app.SkipTurnButton_2, 'Enable', 'on');
+            set(app.Chef1ScoreButton, 'Enable', 'off');
+            set(app.Chef1ScoreButton_2, 'Enable', 'off');
+            set(app.Chef2ScoreButton, 'Enable', 'off');
+            set(app.Chef2ScoreButton_2, 'Enable', 'off');
+        end
+
+        % Button pushed function: Chef2ScoreButton_2
+        function Chef2ScoreButton_2Pushed(app, event)
+            app.UITable.Data(9,2) = app.UITable.Data(9,2) - 15;
+            set(app.AddToppingButton,'Enable','on');
+            set(app.AddToppingButton_2,'Enable','off');
+            set(app.RollDiceButton_2,'Enable','off');
+            set(app.RollDiceButton,'Enable','on');
+            set(app.ClearPizzaButton_2,'Enable','off');
+            set(app.ClearPizzaButton,'Enable','on');
+            set(app.SkipTurnButton, 'Enable', 'on');
+            set(app.SkipTurnButton_2, 'Enable', 'off');
+            set(app.Chef1ScoreButton, 'Enable', 'off');
+            set(app.Chef1ScoreButton_2, 'Enable', 'off');
+            set(app.Chef2ScoreButton, 'Enable', 'off');
+            set(app.Chef2ScoreButton_2, 'Enable', 'off');
+        end
+
+        % Button pushed function: Chef1ScoreButton
+        function Chef1ScoreButtonPushed(app, event)
+            app.UITable.Data(9,1) = app.UITable.Data(9,1) + 10;
+            set(app.AddToppingButton,'Enable','on');
+            set(app.AddToppingButton_2,'Enable','off');
+            set(app.RollDiceButton_2,'Enable','off');
+            set(app.RollDiceButton,'Enable','on');
+            set(app.ClearPizzaButton_2,'Enable','off');
+            set(app.ClearPizzaButton,'Enable','on');
+            set(app.SkipTurnButton, 'Enable', 'on');
+            set(app.SkipTurnButton_2, 'Enable', 'off');
+            set(app.Chef1ScoreButton, 'Enable', 'off');
+            set(app.Chef1ScoreButton_2, 'Enable', 'off');
+            set(app.Chef2ScoreButton, 'Enable', 'off');
+            set(app.Chef2ScoreButton_2, 'Enable', 'off');
         end
     end
 
@@ -331,20 +485,76 @@ end
             app.UIFigure.Position = [100 100 636 480];
             app.UIFigure.Name = 'MATLAB App';
 
-            % Create Image
-            app.Image = uiimage(app.UIFigure);
-            app.Image.Position = [487 217 100 100];
-            app.Image.ImageSource = 'bad luck club.jpg';
-
             % Create Image2
             app.Image2 = uiimage(app.UIFigure);
-            app.Image2.Position = [-7 0 482 481];
-            app.Image2.ImageSource = 'istockphoto-1278086601-170667a.jpg';
+            app.Image2.Position = [-2 0 482 481];
+            app.Image2.ImageSource = 'background.jpg';
+
+            % Create MuteMusicButton
+            app.MuteMusicButton = uibutton(app.UIFigure, 'push');
+            app.MuteMusicButton.ButtonPushedFcn = createCallbackFcn(app, @MuteMusicButtonPushed, true);
+            app.MuteMusicButton.FontName = 'Baskerville';
+            app.MuteMusicButton.FontSize = 14;
+            app.MuteMusicButton.Position = [28 132 100 24];
+            app.MuteMusicButton.Text = 'Mute Music';
+
+            % Create Image8
+            app.Image8 = uiimage(app.UIFigure);
+            app.Image8.Position = [1 166 149 150];
+            app.Image8.ImageSource = '557px-Dice-0.svg.png';
 
             % Create Image2_2
             app.Image2_2 = uiimage(app.UIFigure);
-            app.Image2_2.Position = [236 0 482 481];
-            app.Image2_2.ImageSource = 'istockphoto-1278086601-170667a.jpg';
+            app.Image2_2.Position = [288 -1 482 481];
+            app.Image2_2.ImageSource = 'background.jpg';
+
+            % Create Chef2ScoreButton
+            app.Chef2ScoreButton = uibutton(app.UIFigure, 'push');
+            app.Chef2ScoreButton.ButtonPushedFcn = createCallbackFcn(app, @Chef2ScoreButtonPushed, true);
+            app.Chef2ScoreButton.FontName = 'Baskerville';
+            app.Chef2ScoreButton.FontSize = 14;
+            app.Chef2ScoreButton.Position = [514 74 123 25];
+            app.Chef2ScoreButton.Text = '+10 Chef 2 Score';
+
+            % Create Chef1ScoreButton_2
+            app.Chef1ScoreButton_2 = uibutton(app.UIFigure, 'push');
+            app.Chef1ScoreButton_2.ButtonPushedFcn = createCallbackFcn(app, @Chef1ScoreButton_2Pushed, true);
+            app.Chef1ScoreButton_2.FontName = 'Baskerville';
+            app.Chef1ScoreButton_2.FontSize = 14;
+            app.Chef1ScoreButton_2.Position = [335 75 122 25];
+            app.Chef1ScoreButton_2.Text = '-15 Chef 1 Score';
+
+            % Create Chef1ScoreButton
+            app.Chef1ScoreButton = uibutton(app.UIFigure, 'push');
+            app.Chef1ScoreButton.ButtonPushedFcn = createCallbackFcn(app, @Chef1ScoreButtonPushed, true);
+            app.Chef1ScoreButton.FontName = 'Baskerville';
+            app.Chef1ScoreButton.FontSize = 14;
+            app.Chef1ScoreButton.Position = [523 389 114 25];
+            app.Chef1ScoreButton.Text = '+10 Chef 1 Score';
+
+            % Create Chef2ScoreButton_2
+            app.Chef2ScoreButton_2 = uibutton(app.UIFigure, 'push');
+            app.Chef2ScoreButton_2.ButtonPushedFcn = createCallbackFcn(app, @Chef2ScoreButton_2Pushed, true);
+            app.Chef2ScoreButton_2.FontName = 'Baskerville';
+            app.Chef2ScoreButton_2.FontSize = 14;
+            app.Chef2ScoreButton_2.Position = [335 389 110 25];
+            app.Chef2ScoreButton_2.Text = '-15 Chef 2 Score';
+
+            % Create SkipTurnButton
+            app.SkipTurnButton = uibutton(app.UIFigure, 'push');
+            app.SkipTurnButton.ButtonPushedFcn = createCallbackFcn(app, @SkipTurnButtonPushed, true);
+            app.SkipTurnButton.FontName = 'Baskerville';
+            app.SkipTurnButton.FontSize = 14;
+            app.SkipTurnButton.Position = [479 18 100 24];
+            app.SkipTurnButton.Text = 'Skip Turn';
+
+            % Create SkipTurnButton_2
+            app.SkipTurnButton_2 = uibutton(app.UIFigure, 'push');
+            app.SkipTurnButton_2.ButtonPushedFcn = createCallbackFcn(app, @SkipTurnButton_2Pushed, true);
+            app.SkipTurnButton_2.FontName = 'Baskerville';
+            app.SkipTurnButton_2.FontSize = 14;
+            app.SkipTurnButton_2.Position = [479 447 100 24];
+            app.SkipTurnButton_2.Text = 'Skip Turn';
 
             % Create AddToppingButton
             app.AddToppingButton = uibutton(app.UIFigure, 'push');
@@ -365,162 +575,147 @@ end
             % Create Dough
             app.Dough = uiimage(app.UIFigure);
             app.Dough.HandleVisibility = 'callback';
-            app.Dough.Position = [436 192 202 150];
+            app.Dough.Position = [-24 166 202 150];
             app.Dough.ImageSource = 'Dough.PNG';
 
             % Create Sauce
             app.Sauce = uiimage(app.UIFigure);
             app.Sauce.HandleVisibility = 'callback';
-            app.Sauce.Position = [480 209 114 116];
+            app.Sauce.Position = [20 183 114 116];
             app.Sauce.ImageSource = 'Sauce.PNG';
 
             % Create Cheese
             app.Cheese = uiimage(app.UIFigure);
             app.Cheese.HandleVisibility = 'callback';
-            app.Cheese.Position = [439 182 199 170];
+            app.Cheese.Position = [-21 156 199 170];
             app.Cheese.ImageSource = 'Cheese.PNG';
 
             % Create Peppers
             app.Peppers = uiimage(app.UIFigure);
             app.Peppers.HandleVisibility = 'callback';
-            app.Peppers.Position = [436 230 135 128];
+            app.Peppers.Position = [-24 204 135 128];
             app.Peppers.ImageSource = 'Bell peppers.png';
 
             % Create Mushroom
             app.Mushroom = uiimage(app.UIFigure);
             app.Mushroom.HandleVisibility = 'callback';
-            app.Mushroom.Position = [496 201 100 100];
+            app.Mushroom.Position = [36 175 100 100];
             app.Mushroom.ImageSource = 'Mushroom.png';
 
             % Create Pepperoni
             app.Pepperoni = uiimage(app.UIFigure);
             app.Pepperoni.HandleVisibility = 'callback';
-            app.Pepperoni.Position = [516 217 100 100];
+            app.Pepperoni.Position = [56 191 100 100];
             app.Pepperoni.ImageSource = 'Pepperoni.png';
 
             % Create Olive
             app.Olive = uiimage(app.UIFigure);
             app.Olive.HandleVisibility = 'callback';
-            app.Olive.Position = [506 217 100 100];
+            app.Olive.Position = [46 191 100 100];
             app.Olive.ImageSource = 'Olive.png';
-
-            % Create Chef2ScoresLabel
-            app.Chef2ScoresLabel = uilabel(app.UIFigure);
-            app.Chef2ScoresLabel.HorizontalAlignment = 'center';
-            app.Chef2ScoresLabel.FontName = 'Baskerville';
-            app.Chef2ScoresLabel.FontSize = 14;
-            app.Chef2ScoresLabel.FontWeight = 'bold';
-            app.Chef2ScoresLabel.Position = [479 417 94 22];
-            app.Chef2ScoresLabel.Text = 'Chef 2 Scores';
-
-            % Create StartButton
-            app.StartButton = uibutton(app.UIFigure, 'push');
-            app.StartButton.ButtonPushedFcn = createCallbackFcn(app, @StartButtonPushed, true);
-            app.StartButton.FontName = 'Baskerville';
-            app.StartButton.FontSize = 13;
-            app.StartButton.Position = [1 238 100 26];
-            app.StartButton.Text = 'Start';
 
             % Create Dough_2
             app.Dough_2 = uiimage(app.UIFigure);
             app.Dough_2.HandleVisibility = 'callback';
-            app.Dough_2.Position = [181 92 202 151];
+            app.Dough_2.Position = [134 99 202 143];
             app.Dough_2.ImageSource = 'Dough.PNG';
 
             % Create Sauce_2
             app.Sauce_2 = uiimage(app.UIFigure);
             app.Sauce_2.HandleVisibility = 'callback';
-            app.Sauce_2.Position = [225 109 114 117];
+            app.Sauce_2.Position = [178 116 114 109];
             app.Sauce_2.ImageSource = 'Sauce.PNG';
 
             % Create Cheese_2
             app.Cheese_2 = uiimage(app.UIFigure);
             app.Cheese_2.HandleVisibility = 'callback';
-            app.Cheese_2.Position = [184 82 199 171];
+            app.Cheese_2.Position = [137 89 199 163];
             app.Cheese_2.ImageSource = 'Cheese.PNG';
 
             % Create Peppers_2
             app.Peppers_2 = uiimage(app.UIFigure);
             app.Peppers_2.HandleVisibility = 'callback';
-            app.Peppers_2.Position = [184 133 135 129];
+            app.Peppers_2.Position = [137 140 135 121];
             app.Peppers_2.ImageSource = 'Bell peppers.png';
 
             % Create Mushroom_2
             app.Mushroom_2 = uiimage(app.UIFigure);
             app.Mushroom_2.HandleVisibility = 'callback';
-            app.Mushroom_2.Position = [241 101 100 101];
+            app.Mushroom_2.Position = [194 108 100 93];
             app.Mushroom_2.ImageSource = 'Mushroom.png';
 
             % Create Pepperoni_2
             app.Pepperoni_2 = uiimage(app.UIFigure);
             app.Pepperoni_2.HandleVisibility = 'callback';
-            app.Pepperoni_2.Position = [261 117 100 101];
+            app.Pepperoni_2.Position = [214 124 100 93];
             app.Pepperoni_2.ImageSource = 'Pepperoni.png';
 
             % Create Olive_2
             app.Olive_2 = uiimage(app.UIFigure);
             app.Olive_2.HandleVisibility = 'callback';
-            app.Olive_2.Position = [251 117 100 101];
+            app.Olive_2.Position = [204 124 100 93];
             app.Olive_2.ImageSource = 'Olive.png';
 
             % Create Dough_3
             app.Dough_3 = uiimage(app.UIFigure);
             app.Dough_3.HandleVisibility = 'callback';
-            app.Dough_3.Position = [183 258 202 150];
+            app.Dough_3.Position = [136 265 202 142];
             app.Dough_3.ImageSource = 'Dough.PNG';
 
             % Create Sauce_3
             app.Sauce_3 = uiimage(app.UIFigure);
             app.Sauce_3.HandleVisibility = 'callback';
-            app.Sauce_3.Position = [227 275 114 116];
+            app.Sauce_3.Position = [180 282 114 108];
             app.Sauce_3.ImageSource = 'Sauce.PNG';
 
             % Create Cheese_3
             app.Cheese_3 = uiimage(app.UIFigure);
             app.Cheese_3.HandleVisibility = 'callback';
-            app.Cheese_3.Position = [186 248 199 170];
+            app.Cheese_3.Position = [139 255 199 162];
             app.Cheese_3.ImageSource = 'Cheese.PNG';
 
             % Create Peppers_3
             app.Peppers_3 = uiimage(app.UIFigure);
             app.Peppers_3.HandleVisibility = 'callback';
-            app.Peppers_3.Position = [183 296 135 128];
+            app.Peppers_3.Position = [136 303 135 120];
             app.Peppers_3.ImageSource = 'Bell peppers.png';
 
             % Create Mushroom_3
             app.Mushroom_3 = uiimage(app.UIFigure);
             app.Mushroom_3.HandleVisibility = 'callback';
-            app.Mushroom_3.Position = [243 267 100 100];
+            app.Mushroom_3.Position = [196 274 100 92];
             app.Mushroom_3.ImageSource = 'Mushroom.png';
 
             % Create Pepperoni_3
             app.Pepperoni_3 = uiimage(app.UIFigure);
             app.Pepperoni_3.HandleVisibility = 'callback';
-            app.Pepperoni_3.Position = [263 283 100 100];
+            app.Pepperoni_3.Position = [216 290 100 92];
             app.Pepperoni_3.ImageSource = 'Pepperoni.png';
 
             % Create Olive_3
             app.Olive_3 = uiimage(app.UIFigure);
             app.Olive_3.HandleVisibility = 'callback';
-            app.Olive_3.Position = [253 283 100 100];
+            app.Olive_3.Position = [206 290 100 92];
             app.Olive_3.ImageSource = 'Olive.png';
 
             % Create Chef2Label
             app.Chef2Label = uilabel(app.UIFigure);
+            app.Chef2Label.BackgroundColor = [0.9294 0.6941 0.1255];
             app.Chef2Label.HorizontalAlignment = 'center';
             app.Chef2Label.FontName = 'Baskerville';
             app.Chef2Label.FontSize = 14;
             app.Chef2Label.FontWeight = 'bold';
-            app.Chef2Label.Position = [260 417 48 22];
+            app.Chef2Label.Position = [213 416 48 22];
             app.Chef2Label.Text = 'Chef 2';
 
             % Create Chef1Label
             app.Chef1Label = uilabel(app.UIFigure);
+            app.Chef1Label.BackgroundColor = [0.9294 0.6941 0.1255];
             app.Chef1Label.HorizontalAlignment = 'center';
             app.Chef1Label.FontName = 'Baskerville';
             app.Chef1Label.FontSize = 14;
             app.Chef1Label.FontWeight = 'bold';
-            app.Chef1Label.Position = [257 61 48 22];
+            app.Chef1Label.Position = [213 61 48 22];
             app.Chef1Label.Text = 'Chef 1';
 
             % Create ClearPizzaButton
@@ -530,25 +725,6 @@ end
             app.ClearPizzaButton.FontSize = 13;
             app.ClearPizzaButton.Position = [362 17 101 26];
             app.ClearPizzaButton.Text = 'Clear Pizza';
-
-            % Create Chef1ScoreLabel
-            app.Chef1ScoreLabel = uilabel(app.UIFigure);
-            app.Chef1ScoreLabel.HorizontalAlignment = 'center';
-            app.Chef1ScoreLabel.FontName = 'Baskerville';
-            app.Chef1ScoreLabel.FontSize = 14;
-            app.Chef1ScoreLabel.FontWeight = 'bold';
-            app.Chef1ScoreLabel.Position = [480 61 88 22];
-            app.Chef1ScoreLabel.Text = 'Chef 1 Score';
-
-            % Create ScoreEditField
-            app.ScoreEditField = uieditfield(app.UIFigure, 'numeric');
-            app.ScoreEditField.ValueChangedFcn = createCallbackFcn(app, @ScoreEditFieldValueChanged, true);
-            app.ScoreEditField.Position = [474 101 100 22];
-
-            % Create ScoreEditField_2
-            app.ScoreEditField_2 = uieditfield(app.UIFigure, 'numeric');
-            app.ScoreEditField_2.ValueChangedFcn = createCallbackFcn(app, @ScoreEditField_2ValueChanged, true);
-            app.ScoreEditField_2.Position = [476 382 100 22];
 
             % Create AddToppingButton_2
             app.AddToppingButton_2 = uibutton(app.UIFigure, 'push');
@@ -576,13 +752,55 @@ end
 
             % Create Image4
             app.Image4 = uiimage(app.UIFigure);
-            app.Image4.Position = [-7 283 128 157];
-            app.Image4.ImageSource = '9-97401_loading-screen-pizza-club-penguin-pizza-guy.png';
+            app.Image4.Position = [-7 324 128 157];
+            app.Image4.ImageSource = 'pizza-club-penguin.png';
 
-            % Create Image5
-            app.Image5 = uiimage(app.UIFigure);
-            app.Image5.Position = [-7 29 146 214];
-            app.Image5.ImageSource = '99-998190_image-mopping-club-penguin-pizza-guy-club-penguin.png';
+            % Create UITable
+            app.UITable = uitable(app.UIFigure);
+            app.UITable.ColumnName = {'Chef 1'; 'Chef 2'; 'Value'};
+            app.UITable.RowName = {'Dough'; 'Sauce'; 'Cheese'; 'Pepperoni'; 'Mushroom'; 'Bad Luck'; 'Peppers'; 'Olive'; 'Total Score'};
+            app.UITable.Position = [335 132 302 227];
+
+            % Create Chef2Wins
+            app.Chef2Wins = uiimage(app.UIFigure);
+            app.Chef2Wins.Position = [46 -4 505 483];
+            app.Chef2Wins.ImageSource = 'Chef 2 Won.png';
+
+            % Create Image
+            app.Image = uiimage(app.UIFigure);
+            app.Image.Position = [27 191 100 100];
+            app.Image.ImageSource = 'bad luck club.jpg';
+
+            % Create Chef1Wins
+            app.Chef1Wins = uiimage(app.UIFigure);
+            app.Chef1Wins.Position = [56 -4 489 484];
+            app.Chef1Wins.ImageSource = 'Chef 1 Won.png';
+
+            % Create Image7
+            app.Image7 = uiimage(app.UIFigure);
+            app.Image7.Position = [-273 -235 1238 757];
+            app.Image7.ImageSource = '51UW1849rJL._AC_SY355_.jpg';
+
+            % Create StartButton
+            app.StartButton = uibutton(app.UIFigure, 'push');
+            app.StartButton.ButtonPushedFcn = createCallbackFcn(app, @StartButtonPushed, true);
+            app.StartButton.FontName = 'Baskerville';
+            app.StartButton.FontSize = 13;
+            app.StartButton.Position = [29 99 100 26];
+            app.StartButton.Text = 'Start';
+
+            % Create TextArea
+            app.TextArea = uitextarea(app.UIFigure);
+            app.TextArea.HorizontalAlignment = 'center';
+            app.TextArea.FontName = 'Baskerville';
+            app.TextArea.FontSize = 18;
+            app.TextArea.Position = [28 219 102 51];
+            app.TextArea.Value = {'Press Start when Ready'};
+
+            % Create Image6
+            app.Image6 = uiimage(app.UIFigure);
+            app.Image6.Position = [149 -45 486 563];
+            app.Image6.ImageSource = 'Get.png';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
@@ -601,6 +819,9 @@ end
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
 
+            % Execute the startup function
+            runStartupFcn(app, @startupFcn)
+
             if nargout == 0
                 clear app
             end
@@ -614,5 +835,3 @@ end
         end
     end
 end
-
-
