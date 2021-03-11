@@ -1,5 +1,7 @@
 classdef app1 < matlab.apps.AppBase
 
+wee woooo
+
     % Properties that correspond to app components
     properties (Access = public)
         UIFigure            matlab.ui.Figure
