@@ -1,4 +1,4 @@
-classdef ThingSpeakFinalProjectTEST < matlab.apps.AppBase
+classdef ThingSpeakFinalProjectTEST < matlab.apps.AppBaseclassdef 
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -52,6 +52,8 @@ classdef ThingSpeakFinalProjectTEST < matlab.apps.AppBase
         TextArea            matlab.ui.control.TextArea
         Image6              matlab.ui.control.Image
         CheckForTurnButton  matlab.ui.control.Button
+        Player1Button       matlab.ui.control.Button
+        Player2Button       matlab.ui.control.Button
     end
 
 properties
@@ -187,14 +189,7 @@ end
             x=y/3;
             sound(x,Fs,16);
             app.StartButton.Visible = 'off';
-            set(app.ClearPizzaButton_2,'Enable','off');
-            set(app.AddToppingButton_2,'Enable','off');
-            set(app.RollDiceButton_2,'Enable','off');
-            set(app.Chef1ScoreButton, 'Enable', 'off');
-            set(app.Chef1ScoreButton_2, 'Enable', 'off');
-            set(app.Chef2ScoreButton, 'Enable', 'off');
-            set(app.Chef2ScoreButton_2, 'Enable', 'off');
-            set(app.SkipTurnButton_2, 'Enable', 'off');
+            
         end
 
         % Button pushed function: AddToppingButton
@@ -586,6 +581,62 @@ end
            
            
         end
+
+        % Image clicked function: Image7
+        function Image7Clicked(app, event)
+            
+        end
+
+        % Button pushed function: Player1Button
+        function Player1ButtonPushed(app, event)
+             set(app.AddToppingButton,'Enable','on');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','on');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','on');
+    set(app.SkipTurnButton, 'Enable', 'on');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
+    set(app.Chef1ScoreButton,'Enable','off');
+    set(app.Chef1ScoreButton_2,'Enable','off');
+    set(app.Chef2ScoreButton,'Enable','off');
+    set(app.Chef2ScoreButton_2,'Enable','off');
+   
+    app.Player2Button.Visible = 'off';
+    app.Player1Button.Visible = 'off';
+    app.AddToppingButton_2.Visible = 'off';
+    app.RollDiceButton_2.Visible = 'off';
+    app.SkipTurnButton_2.Visible = 'off';
+    app.Chef1ScoreButton.Visible = 'off';
+    app.Chef2ScoreButton_2.Visible = 'off';
+    app.ClearPizzaButton_2.Visible = 'off';
+    
+        end
+
+        % Button pushed function: Player2Button
+        function Player2ButtonPushed(app, event)
+            set(app.AddToppingButton,'Enable','off');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','off');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','off');
+    set(app.SkipTurnButton, 'Enable', 'off');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
+    set(app.Chef1ScoreButton,'Enable','off');
+    set(app.Chef1ScoreButton_2,'Enable','off');
+    set(app.Chef2ScoreButton,'Enable','off');
+    set(app.Chef2ScoreButton_2,'Enable','off');
+    
+    app.Player2Button.Visible = 'off';
+    app.Player1Button.Visible = 'off';
+    app.AddToppingButton.Visible = 'off';
+    app.RollDiceButton.Visible = 'off';
+    app.SkipTurnButton.Visible = 'off';
+    app.Chef2ScoreButton.Visible = 'off';
+    app.Chef1ScoreButton_2.Visible = 'off';
+    app.ClearPizzaButton.Visible = 'off';
+        end
     end
 
     % Component initialization
@@ -892,6 +943,7 @@ end
 
             % Create Image7
             app.Image7 = uiimage(app.UIFigure);
+            app.Image7.ImageClickedFcn = createCallbackFcn(app, @Image7Clicked, true);
             app.Image7.Position = [-273 -235 1238 757];
             app.Image7.ImageSource = '51UW1849rJL._AC_SY355_.jpg';
 
@@ -921,6 +973,18 @@ end
             app.CheckForTurnButton.ButtonPushedFcn = createCallbackFcn(app, @CheckForTurnButtonPushed, true);
             app.CheckForTurnButton.Position = [7 40 100 22];
             app.CheckForTurnButton.Text = 'Check For Turn';
+
+            % Create Player1Button
+            app.Player1Button = uibutton(app.UIFigure, 'push');
+            app.Player1Button.ButtonPushedFcn = createCallbackFcn(app, @Player1ButtonPushed, true);
+            app.Player1Button.Position = [26 385 100 22];
+            app.Player1Button.Text = 'Player 1';
+
+            % Create Player2Button
+            app.Player2Button = uibutton(app.UIFigure, 'push');
+            app.Player2Button.ButtonPushedFcn = createCallbackFcn(app, @Player2ButtonPushed, true);
+            app.Player2Button.Position = [26 344 100 22];
+            app.Player2Button.Text = 'Player 2';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
