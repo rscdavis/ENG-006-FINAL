@@ -1,6 +1,4 @@
-classdef app1 < matlab.apps.AppBase
-
-wee woooo
+classdef ThingSpeakFinalProjectTEST < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -53,6 +51,7 @@ wee woooo
         StartButton         matlab.ui.control.Button
         TextArea            matlab.ui.control.TextArea
         Image6              matlab.ui.control.Image
+        CheckForTurnButton  matlab.ui.control.Button
     end
 
 properties
@@ -64,6 +63,7 @@ properties (Access = public)
     channelID = 1322648;
     writeAPI = '2G22V6OG6PFINWRA';
     readAPI =  'L40IA0P1S3Q4G3AC';
+    whoseTurn = 0;
 end
 
     % Callbacks that handle component events
@@ -78,6 +78,10 @@ end
         % Button pushed function: RollDiceButton
         function RollDiceButtonPushed(app, event)
             app.diceRoll = randi([1,8],1,1);
+            
+            thingSpeakWrite(app.channelID,'fields',1,'values',app.diceRoll,'writeKey',app.writeAPI);
+       
+            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -195,6 +199,9 @@ end
 
         % Button pushed function: AddToppingButton
         function AddToppingButtonPushed(app, event)
+            
+            app.whoseTurn = 2;
+            
     set(app.AddToppingButton,'Enable','off');
     set(app.AddToppingButton_2,'Enable','on');
     set(app.RollDiceButton_2,'Enable','on');
@@ -203,6 +210,11 @@ end
     set(app.ClearPizzaButton,'Enable','off');
     set(app.SkipTurnButton, 'Enable', 'off');
     set(app.SkipTurnButton_2, 'Enable', 'on');
+    
+   app.diceRoll = thingSpeakRead(app.channelID, 'fields',1,'readKey',app.readAPI);
+   
+   thingSpeakWrite(app.channelID,'fields',4,'values',app.whoseTurn,'writeKey',app.writeAPI);
+   
 if app.diceRoll == 1 
     app.Dough_2.Visible = 'on';
     app.UITable.Data(9, 1) = app.UITable.Data(9,1) + 50;
@@ -252,6 +264,9 @@ end
         % Button pushed function: RollDiceButton_2
         function RollDiceButton_2Pushed(app, event)
             app.diceRoll_2 = randi([1,8],1,1);
+            
+            thingSpeakWrite(app.channelID,'fields',1,'values',app.diceRoll_2,'writeKey',app.writeAPI);
+            
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
             app.Pepperoni.Visible = 'off';
@@ -338,6 +353,13 @@ end
 
         % Button pushed function: AddToppingButton_2
         function AddToppingButton_2Pushed(app, event)
+            
+            app.whoseTurn = 1;
+            
+    app.diceRoll_2 = thingSpeakRead(app.channelID,'fields',1,'readKey',app.readAPI);
+    
+    thingSpeakWrite(app.channelID,'fields',4,'values',app.whoseTurn,'writeKey',app.writeAPI);
+    
     set(app.AddToppingButton,'Enable','on');
     set(app.AddToppingButton_2,'Enable','off');
     set(app.RollDiceButton_2,'Enable','off');
@@ -346,6 +368,7 @@ end
     set(app.ClearPizzaButton,'Enable','on');
     set(app.SkipTurnButton, 'Enable', 'on');
     set(app.SkipTurnButton_2, 'Enable', 'off');
+    
 if app.diceRoll_2 == 1 
     app.Dough_3.Visible = 'on';
     app.UITable.Data(9, 2) = app.UITable.Data(9, 2) + 50;
@@ -409,6 +432,9 @@ end
 
         % Button pushed function: Chef1ScoreButton_2
         function Chef1ScoreButton_2Pushed(app, event)
+            
+            app.whoseTurn = 2;
+            
             app.UITable.Data(9,1) = app.UITable.Data(9,1) - 15;
             set(app.AddToppingButton,'Enable','off');
             set(app.AddToppingButton_2,'Enable','on');
@@ -426,6 +452,9 @@ end
 
         % Button pushed function: Chef2ScoreButton
         function Chef2ScoreButtonPushed(app, event)
+            
+            app.whoseTurn = 1;
+            
             app.UITable.Data(9,2) = app.UITable.Data(9,2) + 10;
             set(app.AddToppingButton,'Enable','off');
             set(app.AddToppingButton_2,'Enable','on');
@@ -443,6 +472,9 @@ end
 
         % Button pushed function: Chef2ScoreButton_2
         function Chef2ScoreButton_2Pushed(app, event)
+            
+            app.whoseTurn = 1;
+            
             app.UITable.Data(9,2) = app.UITable.Data(9,2) - 15;
             set(app.AddToppingButton,'Enable','on');
             set(app.AddToppingButton_2,'Enable','off');
@@ -460,6 +492,9 @@ end
 
         % Button pushed function: Chef1ScoreButton
         function Chef1ScoreButtonPushed(app, event)
+            
+            app.whoseTurn = 2;
+            
             app.UITable.Data(9,1) = app.UITable.Data(9,1) + 10;
             set(app.AddToppingButton,'Enable','on');
             set(app.AddToppingButton_2,'Enable','off');
@@ -473,6 +508,83 @@ end
             set(app.Chef1ScoreButton_2, 'Enable', 'off');
             set(app.Chef2ScoreButton, 'Enable', 'off');
             set(app.Chef2ScoreButton_2, 'Enable', 'off');
+        end
+
+        % Button pushed function: CheckForTurnButton
+        function CheckForTurnButtonPushed(app, event)
+           app.whoseTurn = thingSpeakRead(app.channelID,'fields',4,'readKey',app.readAPI);
+           
+         
+           if app.whoseTurn == 1
+     set(app.AddToppingButton,'Enable','on');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','on');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','on');
+    set(app.SkipTurnButton, 'Enable', 'on');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
+           end
+           
+           if app.whoseTurn == 2
+     set(app.AddToppingButton,'Enable','off');
+    set(app.AddToppingButton_2,'Enable','on');
+    set(app.RollDiceButton_2,'Enable','on');
+    set(app.RollDiceButton,'Enable','off');
+    set(app.ClearPizzaButton_2,'Enable','on');
+    set(app.ClearPizzaButton,'Enable','off');
+    set(app.SkipTurnButton, 'Enable', 'off');
+    set(app.SkipTurnButton_2, 'Enable', 'on');
+           end
+           
+           if app.diceRoll == 1 
+    app.Dough_2.Visible = 'on';
+   
+elseif app.diceRoll == 2
+    app.Sauce_2.Visible = 'on';
+    
+elseif app.diceRoll == 3
+    app.Cheese_2.Visible = 'on';
+    
+elseif app.diceRoll == 4
+    app.Pepperoni_2.Visible = 'on';
+    
+elseif app.diceRoll == 5
+    app.Mushroom_2.Visible = 'on';
+    
+elseif app.diceRoll == 7
+    app.Peppers_2.Visible = 'on';
+    
+elseif app.diceRoll == 8
+    app.Olive_2.Visible = 'on';
+      
+           end
+           
+           if app.diceRoll_2 == 1 
+    app.Dough_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 2
+    app.Sauce_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 3
+    app.Cheese_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 4
+    app.Pepperoni_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 5
+    app.Mushroom_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 7
+    app.Peppers_3.Visible = 'on';
+    
+elseif app.diceRoll_2 == 8
+    app.Olive_3.Visible = 'on';
+    
+end
+           
+           
+           
         end
     end
 
@@ -804,6 +916,12 @@ end
             app.Image6.Position = [149 -45 486 563];
             app.Image6.ImageSource = 'Get.png';
 
+            % Create CheckForTurnButton
+            app.CheckForTurnButton = uibutton(app.UIFigure, 'push');
+            app.CheckForTurnButton.ButtonPushedFcn = createCallbackFcn(app, @CheckForTurnButtonPushed, true);
+            app.CheckForTurnButton.Position = [7 40 100 22];
+            app.CheckForTurnButton.Text = 'Check For Turn';
+
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
         end
@@ -813,7 +931,7 @@ end
     methods (Access = public)
 
         % Construct app
-        function app = app1
+        function app = ThingSpeakFinalProjectTEST
 
             % Create UIFigure and components
             createComponents(app)
