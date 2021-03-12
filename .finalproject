@@ -1,4 +1,4 @@
-classdef ThingSpeakFinalProjectTEST < matlab.apps.AppBaseclassdef 
+classdef ThingSpeakFinalProjectTESTP5 < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -65,8 +65,49 @@ properties (Access = public)
     channelID = 1322648;
     writeAPI = '2G22V6OG6PFINWRA';
     readAPI =  'L40IA0P1S3Q4G3AC';
-    whoseTurn = 0;
+    whoseTurn = 1;
+    readDelay = 15;
+    playerNum = 0;
+    
+  
+
+    
 end
+    
+    
+    
+    methods (Access = private)
+        
+        function [] = waitForPlayerOneData(app)
+            playerWhoSentMsg = 0;
+            
+            while playerWhoSentMsg ~= 1
+                data = thingSpeakRead(app.channelID,'readKey',app.readAPI);
+                playerWhoSentMsg = data(4);
+                pause(app.readDelay);
+            end
+         
+            app.diceRoll_2 = data(7);
+        app.diceRoll = data(1);  
+            
+        end
+        
+        function [] = waitForPlayerTwoData(app)
+            playerWhoSentMsg = 0;
+            
+            while playerWhoSentMsg ~= 2
+                data = thingSpeakRead(app.channelID,'readKey',app.readAPI);
+                playerWhoSentMsg = data(4);
+                pause(app.readDelay);
+            end
+            
+        
+            
+        end
+        
+       
+    end
+
 
     % Callbacks that handle component events
     methods (Access = private)
@@ -75,12 +116,15 @@ end
         function startupFcn(app)
             startData = [0, 0, 50; 0, 0, 40; 0, 0, 30; 0, 0, 10; 0, 0, 10; 0, 0, -15; 0, 0, 10; 0, 0, 10; 0, 0, 0];
             app.UITable.Data = [app.UITable.Data; startData];
+            
+            thingSpeakWrite(app.channelID,'fields',4,'values',0,'writeKey',app.writeAPI);
         end
 
         % Button pushed function: RollDiceButton
         function RollDiceButtonPushed(app, event)
             app.diceRoll = randi([1,8],1,1);
             
+            pause(app.readDelay); 
             thingSpeakWrite(app.channelID,'fields',1,'values',app.diceRoll,'writeKey',app.writeAPI);
        
             
@@ -185,10 +229,85 @@ end
             app.TextArea.Visible = 'off';
             app.Chef1Wins.Visible = 'off';
             app.Chef2Wins.Visible = 'off';
+            app.StartButton.Visible = 'off';
+           
             [y,Fs] = audioread("30. Pizzatron 3000.mp3");
             x=y/3;
             sound(x,Fs,16);
-            app.StartButton.Visible = 'off';
+           
+            if app.playerNum == 1
+    set(app.AddToppingButton,'Enable','on');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','on');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','on');
+    set(app.SkipTurnButton, 'Enable', 'on');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
+    set(app.Chef1ScoreButton,'Enable','off');
+    set(app.Chef1ScoreButton_2,'Enable','off');
+    set(app.Chef2ScoreButton,'Enable','off');
+    set(app.Chef2ScoreButton_2,'Enable','off');
+   
+    app.Player2Button.Visible = 'off';
+    app.Player1Button.Visible = 'off';
+    app.AddToppingButton_2.Visible = 'off';
+    app.RollDiceButton_2.Visible = 'off';
+    app.SkipTurnButton_2.Visible = 'off';
+    app.Chef1ScoreButton.Visible = 'off';
+    app.Chef2ScoreButton_2.Visible = 'off';
+    app.ClearPizzaButton_2.Visible = 'off';
+    
+            else
+                app.waitForPlayerOneData()
+                app.readData = thingSpeakRead(app.channelID);
+                app.diceRoll = app.readData(1) 
+                
+    set(app.AddToppingButton,'Enable','off');
+    set(app.AddToppingButton_2,'Enable','off');
+    set(app.RollDiceButton_2,'Enable','off');
+    set(app.RollDiceButton,'Enable','off');
+    set(app.ClearPizzaButton_2,'Enable','off');
+    set(app.ClearPizzaButton,'Enable','off');
+    set(app.SkipTurnButton, 'Enable', 'off');
+    set(app.SkipTurnButton_2, 'Enable', 'off');
+    set(app.Chef1ScoreButton,'Enable','off');
+    set(app.Chef1ScoreButton_2,'Enable','off');
+    set(app.Chef2ScoreButton,'Enable','off');
+    set(app.Chef2ScoreButton_2,'Enable','off');
+    
+    app.Player2Button.Visible = 'off';
+    app.Player1Button.Visible = 'off';
+    app.AddToppingButton.Visible = 'off';
+    app.RollDiceButton.Visible = 'off';
+    app.SkipTurnButton.Visible = 'off';
+    app.Chef2ScoreButton.Visible = 'off';
+    app.Chef1ScoreButton_2.Visible = 'off';
+    app.ClearPizzaButton.Visible = 'off';
+                
+                if app.diceRoll == 1 
+                app.Dough_2.Visible = 'on';
+   
+                elseif app.diceRoll == 2
+                app.Sauce_2.Visible = 'on';
+    
+                elseif app.diceRoll == 3
+                app.Cheese_2.Visible = 'on';
+    
+                elseif app.diceRoll == 4
+                app.Pepperoni_2.Visible = 'on';
+    
+                elseif app.diceRoll == 5
+                app.Mushroom_2.Visible = 'on';
+    
+                elseif app.diceRoll == 7
+                app.Peppers_2.Visible = 'on';
+    
+                elseif app.diceRoll == 8
+                app.Olive_2.Visible = 'on';
+      
+           end
+            end
             
         end
 
@@ -260,7 +379,7 @@ end
         function RollDiceButton_2Pushed(app, event)
             app.diceRoll_2 = randi([1,8],1,1);
             
-            thingSpeakWrite(app.channelID,'fields',1,'values',app.diceRoll_2,'writeKey',app.writeAPI);
+            thingSpeakWrite(app.channelID,'fields',7,'values',app.diceRoll_2,'writeKey',app.writeAPI);
             
             app.Olive.Visible = 'off';
             app.Dough.Visible = 'off';
@@ -448,7 +567,7 @@ end
         % Button pushed function: Chef2ScoreButton
         function Chef2ScoreButtonPushed(app, event)
             
-            app.whoseTurn = 1;
+            app.whoseTurn = 2;
             
             app.UITable.Data(9,2) = app.UITable.Data(9,2) + 10;
             set(app.AddToppingButton,'Enable','off');
@@ -488,7 +607,7 @@ end
         % Button pushed function: Chef1ScoreButton
         function Chef1ScoreButtonPushed(app, event)
             
-            app.whoseTurn = 2;
+            app.whoseTurn = 1;
             
             app.UITable.Data(9,1) = app.UITable.Data(9,1) + 10;
             set(app.AddToppingButton,'Enable','on');
@@ -508,6 +627,8 @@ end
         % Button pushed function: CheckForTurnButton
         function CheckForTurnButtonPushed(app, event)
            app.whoseTurn = thingSpeakRead(app.channelID,'fields',4,'readKey',app.readAPI);
+           app.diceRoll = thingSpeakRead(app.channelID,'fields',1,'readKey',app.readAPI);
+           app.diceRoll_2 = thingSpeakRead(app.channelID,'fields',7,'readKey',app.readAPI);
            
          
            if app.whoseTurn == 1
@@ -589,6 +710,9 @@ end
 
         % Button pushed function: Player1Button
         function Player1ButtonPushed(app, event)
+            
+            app.playerNum = 1;
+            
              set(app.AddToppingButton,'Enable','on');
     set(app.AddToppingButton_2,'Enable','off');
     set(app.RollDiceButton_2,'Enable','off');
@@ -615,6 +739,9 @@ end
 
         % Button pushed function: Player2Button
         function Player2ButtonPushed(app, event)
+            
+            app.playerNum = 2;
+            
             set(app.AddToppingButton,'Enable','off');
     set(app.AddToppingButton_2,'Enable','off');
     set(app.RollDiceButton_2,'Enable','off');
@@ -995,7 +1122,7 @@ end
     methods (Access = public)
 
         % Construct app
-        function app = ThingSpeakFinalProjectTEST
+        function app = ThingSpeakFinalProjectTESTP5
 
             % Create UIFigure and components
             createComponents(app)
